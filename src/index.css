@@ -10,12 +10,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;  
+  height: 100vh;
   /* ye na dety tw neeche wala container bech mein ata hi nahi is lia height 100vh is must */
   color: white;
 }
 
-.container{
+.container {
   width: 80vw;
   height: 90vh;
   background-color: rgba(17, 25, 40, 0.75);
@@ -25,3 +25,24 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.125);
   display: flex;
 }
+
+
+
+/* For Webkit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #f8eeee;
+  border-radius: 5px;
+}
+
+/* For Firefox */
+/* * {
+  scrollbar-width: thin;
+  scrollbar-color: #888888 #f0f0f0;
+} */
+
+/* Content area styles */
+/*   */
