@@ -1,22 +1,44 @@
 import React, { useEffect, useRef, useState } from 'react'
 import "./chat.css"
 import EmojiPicker from 'emoji-picker-react';
+import { doc, onSnapshot } from 'firebase/firestore';
+import { db } from '../../lib/firebase';
+import { useUserStore } from '../../lib/userStore';
+import { useChatStore } from '../../lib/chatStore';
+import { format } from "timeago.js";
 
 const Chat = () => {
     const [open, setOpen] = useState(false);
     const [text, setText] = useState("");
-
     const endRef = useRef(null);
+
+    const [chat, setChat] = useState();
+    const { currentUser } = useUserStore();
+    const { chatId, user, isCurrentUserBlocked, isReceiverBlocked } =
+        useChatStore();
 
     useEffect(() => {
         endRef.current?.scrollIntoView({ behavior: "smooth" })
     }, [])
+
+    useEffect(() => {
+        const unSub = onSnapshot(doc(db, "chats", chatId), (res) => {
+            setChat(res.data());
+        });
+
+        return () => {
+            unSub();
+        };
+    }, [chatId]);
+
 
     const handleEmoji = (e) => {
         // console.log(e)
         setText((prev) => prev + e.emoji);
         setOpen(false);
     };
+
+    console.log(chat)
 
     return (
         <div className='chat'>
@@ -40,54 +62,19 @@ const Chat = () => {
 
             {/* Center */}
             <div className="center">
-                <div className="message">
-                    <img src="./images/avatar.png" alt="" />
-                    <div className="texts">
-                        <p>A random text</p>
-                        <span>1 mint ago</span>
+                {chat?.messages?.map((message) => (
+
+                    <div className="message own" key={message?.createAt}
+                    >
+                        <div className="texts">
+                            {message.img && <img src={message.img} alt="" />}
+                            <p>{message.text}</p>
+                            <span>{format(message.createdAt.toDate())}</span>
+
+                        </div>
                     </div>
-                </div>
 
-                <div className="message own">
-                    <div className="texts">
-                        <p>A random text</p>
-                        <span>1 mint ago</span>
-                    </div>
-                </div>
-
-
-                <div className="message">
-                    <img src="./images/avatar.png" alt="" />
-                    <div className="texts">
-                        <p>A random text</p>
-                        <span>1 mint ago</span>
-                    </div>
-                </div>
-
-
-                <div className="message own">
-                    <div className="texts">
-                        <p>A random text</p>
-                        <span>1 mint ago</span>
-                    </div>
-                </div>
-
-
-                <div className="message">
-                    <img src="./images/avatar.png" alt="" />
-                    <div className="texts">
-                        <p>A random text</p>
-                        <span>1 mint ago</span>
-                    </div>
-                </div>
-
-                <div className="message own">
-                    <div className="texts">
-                        <p>A random text</p>
-                        <span>1 mint ago</span>
-                    </div>
-                </div>
-
+                ))}
                 <div ref={endRef}></div>
             </div>
 
