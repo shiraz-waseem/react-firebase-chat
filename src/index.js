@@ -5,7 +5,8 @@ import App from "./App";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  // Just for development. When you deploy it wont render twice
+  // <React.StrictMode>
+  <App />
+  // </React.StrictMode>
 );
