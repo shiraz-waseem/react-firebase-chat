@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import "./chatlist.css"
+import AddUser from './addUser/addUser';
 
 const ChatList = () => {
     const [addMode, setAddMode] = useState(false);
@@ -132,7 +133,7 @@ const ChatList = () => {
                 </div>
             </div>
 
-            {/* {addMode && <AddUser />} */}
+            {addMode && <AddUser />}
 
         </div>
     )

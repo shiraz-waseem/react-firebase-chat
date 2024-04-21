@@ -16,7 +16,7 @@ body {
 }
 
 .container {
-  width: 80vw;
+  width: 90vw;
   height: 90vh;
   background-color: rgba(17, 25, 40, 0.75);
   /* Peeche wala part dhika hi na opacity low ki ha na upper. Most of the browser py nahi chalta */
