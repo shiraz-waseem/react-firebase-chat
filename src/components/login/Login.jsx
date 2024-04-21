@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import "./login.css"
 import { toast } from 'react-toastify';
-
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../lib/firebase';
 const Login = () => {
 
     const [avatar, setAvatar] = useState({
@@ -25,6 +26,32 @@ const Login = () => {
         toast.success("Login")
     }
 
+    const handleRegister = async (e) => {
+        e.preventDefault();
+        // Form sy getting values
+        // setLoading(true);
+        const formData = new FormData(e.target);
+
+        // Form data sy getting them
+        const { username, email, password } = Object.fromEntries(formData);
+
+        console.log(username)
+        // VALIDATE INPUTS
+        // if (!username || !email || !password)
+        //     return toast.warn("Please enter inputs!");
+        // if (!avatar.file) return toast.warn("Please upload an avatar!");
+
+        try {
+            const res = await createUserWithEmailAndPassword(auth, email, password)
+        }
+        catch (err) {
+            console.log(err);
+            toast.error(err.message);
+        }
+
+
+    }
+
     return (
         <div className='login'>
             <div className="item">
@@ -42,7 +69,7 @@ const Login = () => {
             <div className="item">
                 <h2>Create an Account</h2>
                 <form
-                // onSubmit={handleRegister}
+                    onSubmit={handleRegister}
                 >
                     <label htmlFor="file">
                         {/* <img src="./images/avatar.png" alt="" /> */}
