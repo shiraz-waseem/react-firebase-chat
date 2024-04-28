@@ -51,4 +51,12 @@ export const useChatStore = create((set) => ({
     // We will take previous state
     set((state) => ({ ...state, isReceiverBlocked: !state.isReceiverBlocked }));
   },
+  resetChat: () => {
+    set({
+      chatId: null,
+      user: null,
+      isCurrentUserBlocked: false,
+      isReceiverBlocked: false,
+    });
+  },
 }));
